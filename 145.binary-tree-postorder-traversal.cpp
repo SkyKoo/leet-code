@@ -1,27 +1,27 @@
 /*
- * @lc app=leetcode.cn id=144 lang=cpp
+ * @lc app=leetcode.cn id=145 lang=cpp
  * @lcpr version=30122
  *
- * [144] 二叉树的前序遍历
+ * [145] 二叉树的后序遍历
  *
- * https://leetcode.cn/problems/binary-tree-preorder-traversal/description/
+ * https://leetcode.cn/problems/binary-tree-postorder-traversal/description/
  *
  * algorithms
- * Easy (71.84%)
- * Likes:    1247
+ * Easy (76.57%)
+ * Likes:    1173
  * Dislikes: 0
- * Total Accepted:    1.1M
- * Total Submissions: 1.5M
+ * Total Accepted:    773K
+ * Total Submissions: 1M
  * Testcase Example:  '[1,null,2,3]'
  *
- * 给你二叉树的根节点 root ，返回它节点值的 前序 遍历。
+ * 给你一棵二叉树的根节点 root ，返回其节点值的 后序遍历 。
  * 
  * 
  * 
  * 示例 1：
  * 
  * 输入：root = [1,null,2,3]
- * 输出：[1,2,3]
+ * 输出：[3,2,1]
  * 
  * 
  * 示例 2：
@@ -36,24 +36,12 @@
  * 输出：[1]
  * 
  * 
- * 示例 4：
- * 
- * 输入：root = [1,2]
- * 输出：[1,2]
- * 
- * 
- * 示例 5：
- * 
- * 输入：root = [1,null,2]
- * 输出：[1,2]
- * 
- * 
  * 
  * 
  * 提示：
  * 
  * 
- * 树中节点数目在范围 [0, 100] 内
+ * 树中节点的数目在范围 [0, 100] 内
  * -100 <= Node.val <= 100
  * 
  * 
@@ -96,23 +84,28 @@ using namespace std;
  */
 class Solution {
 public:
-    vector<int> preorderTraversal(TreeNode* root) {
-        vector<int> res;
+    vector<int> postorderTraversal(TreeNode* root) {
+        std::vector<int> res;
         if (root == nullptr)
             return res;
 
         TreeNode* p = root;
         std::stack<TreeNode*> st;
+        TreeNode* pre = nullptr;
         while (p != nullptr || !st.empty()) {
             if (p != nullptr) {
-                res.push_back(p->val);
                 st.push(p);
                 p = p->left;
             } else {
                 TreeNode* t = st.top();
                 st.pop();
-                if (t->right != nullptr)
+                if (t->right == nullptr || t->right == pre) {
+                    res.push_back(t->val);
+                    pre = t;
+                } else {
+                    st.push(t);
                     p = t->right;
+                }
             }
         }
         return res;
@@ -133,14 +126,6 @@ public:
 
 // @lcpr case=start
 // [1]\n
-// @lcpr case=end
-
-// @lcpr case=start
-// [1,2]\n
-// @lcpr case=end
-
-// @lcpr case=start
-// [1,null,2]\n
 // @lcpr case=end
 
  */

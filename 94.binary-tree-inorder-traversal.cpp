@@ -1,27 +1,27 @@
 /*
- * @lc app=leetcode.cn id=144 lang=cpp
+ * @lc app=leetcode.cn id=94 lang=cpp
  * @lcpr version=30122
  *
- * [144] 二叉树的前序遍历
+ * [94] 二叉树的中序遍历
  *
- * https://leetcode.cn/problems/binary-tree-preorder-traversal/description/
+ * https://leetcode.cn/problems/binary-tree-inorder-traversal/description/
  *
  * algorithms
- * Easy (71.84%)
- * Likes:    1247
+ * Easy (76.74%)
+ * Likes:    2075
  * Dislikes: 0
- * Total Accepted:    1.1M
- * Total Submissions: 1.5M
+ * Total Accepted:    1.4M
+ * Total Submissions: 1.9M
  * Testcase Example:  '[1,null,2,3]'
  *
- * 给你二叉树的根节点 root ，返回它节点值的 前序 遍历。
+ * 给定一个二叉树的根节点 root ，返回 它的 中序 遍历 。
  * 
  * 
  * 
  * 示例 1：
  * 
  * 输入：root = [1,null,2,3]
- * 输出：[1,2,3]
+ * 输出：[1,3,2]
  * 
  * 
  * 示例 2：
@@ -36,18 +36,6 @@
  * 输出：[1]
  * 
  * 
- * 示例 4：
- * 
- * 输入：root = [1,2]
- * 输出：[1,2]
- * 
- * 
- * 示例 5：
- * 
- * 输入：root = [1,null,2]
- * 输出：[1,2]
- * 
- * 
  * 
  * 
  * 提示：
@@ -59,7 +47,7 @@
  * 
  * 
  * 
- * 进阶：递归算法很简单，你可以通过迭代算法完成吗？
+ * 进阶: 递归算法很简单，你可以通过迭代算法完成吗？
  * 
  */
 
@@ -96,7 +84,7 @@ using namespace std;
  */
 class Solution {
 public:
-    vector<int> preorderTraversal(TreeNode* root) {
+    vector<int> inorderTraversal(TreeNode* root) {
         vector<int> res;
         if (root == nullptr)
             return res;
@@ -105,12 +93,12 @@ public:
         std::stack<TreeNode*> st;
         while (p != nullptr || !st.empty()) {
             if (p != nullptr) {
-                res.push_back(p->val);
                 st.push(p);
                 p = p->left;
             } else {
                 TreeNode* t = st.top();
                 st.pop();
+                res.push_back(t->val);
                 if (t->right != nullptr)
                     p = t->right;
             }
@@ -133,14 +121,6 @@ public:
 
 // @lcpr case=start
 // [1]\n
-// @lcpr case=end
-
-// @lcpr case=start
-// [1,2]\n
-// @lcpr case=end
-
-// @lcpr case=start
-// [1,null,2]\n
 // @lcpr case=end
 
  */
